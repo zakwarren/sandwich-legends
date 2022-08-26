@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 body {
@@ -15,4 +15,21 @@ body {
   height: 198px;
   position: relative;
   outline: 1px solid #fff;
+  transform: scale(1) translateY(50%);
+}
+
+@media (min-width: 768px) {
+  .game-container {
+    transform: scale(2) translateY(50%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-container {
+    transform: scale(3) translateY(50%);
+  }
+}
+
+.game-container canvas {
+  image-rendering: pixelated;
 }
