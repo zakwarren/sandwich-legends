@@ -1,3 +1,5 @@
+import { GameObject } from "../game-object";
+
 export class Overworld {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -10,26 +12,28 @@ export class Overworld {
   }
 
   init() {
+    // draw the map
     const image = new Image();
     image.onload = () => {
       this.ctx.drawImage(image, 0, 0);
     };
     image.src = "/images/maps/DemoLower.png";
 
-    const x = 5;
-    const y = 6;
+    // place some game objects
+    const hero = new GameObject({
+      x: 5,
+      y: 6,
+      src: "/images/characters/people/hero.png",
+    });
+    const npc1 = new GameObject({
+      x: 7,
+      y: 9,
+      src: "/images/characters/people/npc1.png",
+    });
 
-    const shadow = new Image();
-    shadow.onload = () => {
-      this.ctx.drawImage(shadow, 0, 0, 32, 32, x * 16 - 8, y * 16 - 18, 32, 32);
-    };
-    shadow.src = "/images/characters/shadow.png";
-
-    const hero = new Image();
-    hero.onload = () => {
-      // hero, left cut, top cut, width of cut, height of cut, x pos, y pos, width, height
-      this.ctx.drawImage(hero, 0, 0, 32, 32, x * 16 - 8, y * 16 - 18, 32, 32);
-    };
-    hero.src = "/images/characters/people/hero.png";
+    setTimeout(() => {
+      hero.draw(this.ctx);
+      npc1.draw(this.ctx);
+    }, 1000);
   }
 }
