@@ -1,5 +1,6 @@
 import { Sprite } from "./sprite";
-import { BaseAnimations, Context } from "./types";
+import { Context } from "../types";
+import { BaseAnimations } from "./types";
 
 interface Config {
   x?: number;

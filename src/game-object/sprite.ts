@@ -1,4 +1,5 @@
-import { BaseAnimations, Context } from "./types";
+import { Context } from "../types";
+import { BaseAnimations } from "./types";
 
 interface GameObject {
   x: number;
@@ -18,9 +19,9 @@ export class Sprite<Animations extends BaseAnimations> {
   private isLoaded = false;
   private useShadow = false;
   private isShadowLoaded = false;
-  private animations: Animations;
+  // private animations: Animations;
   private currentAnimation = "idleDown";
-  private currentAnimationFrame = 0;
+  // private currentAnimationFrame = 0;
 
   constructor(config: SpriteConfig<Animations>) {
     // setup the image
@@ -39,7 +40,7 @@ export class Sprite<Animations extends BaseAnimations> {
     }
 
     // configure animations and initial state
-    this.animations = config.animations || { idleDown: [[0, 0]] };
+    // this.animations = config.animations || { idleDown: [[0, 0]] };
     this.currentAnimation = config.currentAnimation || this.currentAnimation;
   }
 
