@@ -13,3 +13,9 @@ export interface CameraPosition {
   x: number;
   y: number;
 }
+
+export interface WorldMap {
+  isSpaceTaken: (x: number, y: number, direction: Direction) => boolean;
+  addWall: (x: number, y: number) => void;
+  moveWall: (x: number, y: number, direction: Direction) => void;
+}

@@ -1,9 +1,16 @@
 import { Sprite } from "./sprite";
-import { Context, BaseAnimations, Direction, CameraPosition } from "../types";
+import {
+  Context,
+  BaseAnimations,
+  Direction,
+  CameraPosition,
+  WorldMap,
+} from "../types";
 import { withGrid } from "../utils";
 import { GameObjectConfig } from "./types";
 
 export class GameObject<Animations extends BaseAnimations> {
+  public isMounted = false;
   public x = 0;
   public y = 0;
   private sprite: Sprite<Animations>;
@@ -22,6 +29,11 @@ export class GameObject<Animations extends BaseAnimations> {
     });
     this.direction = config.direction || "down";
     this.directionInput = config.directionInput || null;
+  }
+
+  mount(map: WorldMap) {
+    this.isMounted = true;
+    map.addWall(this.x, this.y);
   }
 
   draw(ctx: Context, cameraFocus?: CameraPosition) {

@@ -19,6 +19,10 @@ export class OverworldMap {
     return this.gameObjects;
   }
 
+  get mapWalls() {
+    return this.walls;
+  }
+
   drawLowerImage(ctx: Context, cameraFocus?: CameraPosition) {
     const cameraPosition = getCameraPosition(cameraFocus);
     ctx.drawImage(this.lowerImage, cameraPosition.x, cameraPosition.y);
@@ -32,5 +36,25 @@ export class OverworldMap {
   isSpaceTaken(currentX: number, currentY: number, direction: Direction) {
     const { x, y } = nextPosition(currentX, currentY, direction);
     return Boolean(this.walls[`${x},${y}`]);
+  }
+
+  mountObjects() {
+    Object.values(this.gameObjects).forEach((object) => {
+      object.mount(this);
+    });
+  }
+
+  addWall(x: number, y: number) {
+    this.walls[`${x},${y}`] = true;
+  }
+
+  removeWall(x: number, y: number) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  moveWall(wasX: number, wasY: number, direction: Direction) {
+    this.removeWall(wasX, wasY);
+    const { x, y } = nextPosition(wasX, wasY, direction);
+    this.addWall(x, y);
   }
 }

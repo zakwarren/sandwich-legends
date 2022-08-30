@@ -1,6 +1,6 @@
 import { GameObject } from "./game-object";
 import { GameObjectConfig } from "./types";
-import { BaseAnimations, Direction } from "../types";
+import { BaseAnimations, Direction, WorldMap } from "../types";
 import { GRID_SIZE } from "../utils";
 
 type DirectionUpdate = ["x" | "y", number];
@@ -16,9 +16,7 @@ interface Animations extends BaseAnimations {
 }
 
 interface UpdateState {
-  map: {
-    isSpaceTaken: (x: number, y: number, direction: Direction) => boolean;
-  };
+  map: WorldMap;
 }
 
 export class Person extends GameObject<Animations> {
@@ -92,6 +90,7 @@ export class Person extends GameObject<Animations> {
       behaviour.type === "walk" &&
       !map.isSpaceTaken(this.x, this.y, this.direction)
     ) {
+      map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = GRID_SIZE;
     }
   }

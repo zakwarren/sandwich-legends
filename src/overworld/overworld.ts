@@ -45,6 +45,7 @@ export class Overworld {
 
   init() {
     this.map = new OverworldMap(this.overworldMaps["DemoRoom"]);
+    this.map.mountObjects();
     this.startGameLoop();
   }
 }

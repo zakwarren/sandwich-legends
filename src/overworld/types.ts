@@ -1,8 +1,9 @@
-import { Context } from "../types";
+import { Context, WorldMap } from "../types";
 
 export interface GameObject {
   x: number;
   y: number;
+  mount: (map: WorldMap) => void;
   draw: (ctx: Context, cameraPosition?: GameObject) => void;
   setAnimation: (key: string) => void;
   update: (config: any) => void;

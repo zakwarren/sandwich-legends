@@ -10,4 +10,20 @@ describe("GameObject", () => {
 
     expect(ctx.drawImage).toHaveBeenCalled();
   });
+
+  it("should mount the game object", () => {
+    const gameObject = new GameObject({ x: 0, y: 0, src: "/test" });
+
+    expect(gameObject.isMounted).toEqual(false);
+
+    const map = {
+      isSpaceTaken: jest.fn(),
+      addWall: jest.fn(),
+      moveWall: jest.fn(),
+    };
+    gameObject.mount(map);
+
+    expect(gameObject.isMounted).toEqual(true);
+    expect(map.addWall).toHaveBeenCalled();
+  });
 });
