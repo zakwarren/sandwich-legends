@@ -20,7 +20,7 @@ export class Sprite<Animations extends BaseAnimations> {
   private useShadow = false;
   private isShadowLoaded = false;
   private animations;
-  private currentAnimation: keyof Animations = "idleDown";
+  private currentAnimation: keyof Animations = "idle-down";
   private currentAnimationFrame = 0;
   private animationFrameLimit = 4;
   private animationFrameProgress;
@@ -50,8 +50,13 @@ export class Sprite<Animations extends BaseAnimations> {
   }
 
   get frame() {
-    // @ts-ignore
-    return this.animations[this.currentAnimation][this.currentAnimationFrame];
+    const current = this.animations[this.currentAnimation as string];
+    if (!current) return undefined;
+    return current[this.currentAnimationFrame];
+  }
+
+  get currentAnimationKey() {
+    return this.currentAnimation;
   }
 
   setAnimation(key: keyof Animations) {
@@ -84,7 +89,8 @@ export class Sprite<Animations extends BaseAnimations> {
       ctx.drawImage(this.shadow, x, y);
     }
 
-    const [frameX, frameY] = this.frame;
+    const frame = this.frame || [0, 0];
+    const [frameX, frameY] = frame;
 
     if (this.isLoaded) {
       ctx.drawImage(this.image, frameX * 32, frameY * 32, 32, 32, x, y, 32, 32);

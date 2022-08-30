@@ -1,7 +1,12 @@
 // @ts-ignore
 global.Image = class Image {
   src = "";
-  onload = () => {};
+  onload = jest.fn();
+  constructor() {
+    setTimeout(() => {
+      this.onload();
+    }, 50);
+  }
 };
 
 afterAll(() => {
