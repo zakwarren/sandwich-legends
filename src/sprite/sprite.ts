@@ -1,5 +1,4 @@
-import { Context } from "../types";
-import { BaseAnimations } from "./types";
+import { Context, BaseAnimations } from "../types";
 
 interface GameObject {
   x: number;
@@ -45,8 +44,8 @@ export class Sprite<Animations extends BaseAnimations> {
   }
 
   draw(ctx: Context, gameObject: GameObject) {
-    const x = gameObject.x * 16 - 8;
-    const y = gameObject.y * 16 - 18;
+    const x = gameObject.x - 8;
+    const y = gameObject.y - 18;
 
     if (this.isShadowLoaded) {
       ctx.drawImage(this.shadow, x, y);

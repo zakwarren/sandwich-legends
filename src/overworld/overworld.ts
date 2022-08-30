@@ -23,6 +23,7 @@ export class Overworld {
 
       // draw game objects
       Object.values(this.map?.getGameObjects() || {}).forEach((object) => {
+        object.update({});
         object.draw(this.ctx);
       });
 

@@ -1,3 +1,9 @@
-export interface BaseAnimations {
-  idleDown: number[][];
+import { Direction } from "../types";
+
+export interface GameObjectConfig {
+  x?: number;
+  y?: number;
+  src: string;
+  direction?: Direction;
+  directionInput?: { direction: Direction };
 }

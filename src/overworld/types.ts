@@ -2,6 +2,7 @@ import { Context } from "../types";
 
 export interface GameObject {
   draw: (ctx: Context) => void;
+  update: (config: {}) => void;
 }
 
 export interface MapConfig {
