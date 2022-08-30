@@ -1,5 +1,5 @@
-import { Context, BaseAnimations, CameraPosition } from "../types";
-import { getCameraPosition } from "../utils";
+import { Context, BaseAnimations, CameraPosition } from "../../types";
+import { getCameraPosition } from "../../utils";
 
 interface GameObject {
   x: number;

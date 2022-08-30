@@ -1,4 +1,4 @@
-import { Sprite } from "../sprite";
+import { Sprite } from "./sprite";
 import { Context, BaseAnimations, Direction, CameraPosition } from "../types";
 import { withGrid } from "../utils";
 import { GameObjectConfig } from "./types";
