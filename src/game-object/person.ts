@@ -15,6 +15,12 @@ interface Animations extends BaseAnimations {
   "walk-up": [number, number][];
 }
 
+interface UpdateState {
+  map: {
+    isSpaceTaken: (x: number, y: number, direction: Direction) => boolean;
+  };
+}
+
 export class Person extends GameObject<Animations> {
   private movingProgressRemaining = 0;
   private directionUpdate: Map<Direction, DirectionUpdate> = new Map([
@@ -60,33 +66,49 @@ export class Person extends GameObject<Animations> {
   }
 
   private updatePosition() {
-    if (this.movingProgressRemaining > 0) {
-      const [property, change] = this.directionUpdate.get(
-        this.direction
-      ) as DirectionUpdate;
-      this[property] += change;
-      this.movingProgressRemaining -= 1;
-    }
+    const [property, change] = this.directionUpdate.get(
+      this.direction
+    ) as DirectionUpdate;
+    this[property] += change;
+    this.movingProgressRemaining -= 1;
   }
 
   private updateSprite() {
-    if (this.movingProgressRemaining === 0 && !this.directionInput?.direction) {
-      this.setAnimation(`idle-${this.direction}`);
-      return;
-    }
-
     if (this.movingProgressRemaining > 0) {
       this.setAnimation(`walk-${this.direction}`);
+      return;
+    }
+    this.setAnimation(`idle-${this.direction}`);
+  }
+
+  startBehaviour(
+    { map }: UpdateState,
+    behaviour: { type: "walk"; direction: Direction }
+  ) {
+    // set character direction
+    this.direction = behaviour.direction;
+    // go here if type is walk and space is not taken
+    if (
+      behaviour.type === "walk" &&
+      !map.isSpaceTaken(this.x, this.y, this.direction)
+    ) {
+      this.movingProgressRemaining = GRID_SIZE;
     }
   }
 
-  update() {
-    this.updatePosition();
-    this.updateSprite();
+  update(state: UpdateState) {
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      // case: we're player input ready and have a direction selected
+      if (this.directionInput?.direction) {
+        this.startBehaviour(state, {
+          type: "walk",
+          direction: this.directionInput.direction,
+        });
+      }
 
-    if (this.movingProgressRemaining === 0 && this.directionInput?.direction) {
-      this.direction = this.directionInput.direction;
-      this.movingProgressRemaining = GRID_SIZE;
+      this.updateSprite();
     }
   }
 }

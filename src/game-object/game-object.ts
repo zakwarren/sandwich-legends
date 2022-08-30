@@ -32,5 +32,5 @@ export class GameObject<Animations extends BaseAnimations> {
     this.sprite.setAnimation(key);
   }
 
-  update() {}
+  update(_state: any) {}
 }

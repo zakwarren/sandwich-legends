@@ -1,6 +1,7 @@
 import { Overworld } from "./overworld";
 import { Person } from "./game-object";
 import { DirectionInput } from "./controls";
+import { asGridCoords } from "./utils";
 
 const overworldMaps = {
   DemoRoom: {
@@ -18,6 +19,12 @@ const overworldMaps = {
         y: 9,
         src: "/images/characters/people/npc1.png",
       }),
+    },
+    walls: {
+      [asGridCoords(7, 6)]: true,
+      [asGridCoords(8, 6)]: true,
+      [asGridCoords(7, 7)]: true,
+      [asGridCoords(8, 7)]: true,
     },
   },
   Kitchen: {

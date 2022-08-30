@@ -24,7 +24,7 @@ export class Overworld {
       // update all objects
       const allObjectValues = Object.values(this.map?.mapGameObjects || {});
       allObjectValues.forEach((object) => {
-        object.update({});
+        object.update({ map: this.map });
       });
 
       // draw lower layer

@@ -5,13 +5,14 @@ export interface GameObject {
   y: number;
   draw: (ctx: Context, cameraPosition?: GameObject) => void;
   setAnimation: (key: string) => void;
-  update: (config: {}) => void;
+  update: (config: any) => void;
 }
 
 export interface MapConfig {
   lowerSrc: string;
   upperSrc: string;
   gameObjects: { [key: string]: GameObject };
+  walls?: { [key: string]: boolean };
 }
 
 export interface Maps {

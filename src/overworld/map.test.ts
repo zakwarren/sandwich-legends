@@ -61,4 +61,29 @@ describe("OverworldMap", () => {
 
     expect(ctx.drawImage).toHaveBeenCalled();
   });
+
+  it("should return if the space is taken", () => {
+    const gameObjects = {
+      test: {
+        x: 1,
+        y: 1,
+        draw: jest.fn(),
+        setAnimation: jest.fn(),
+        update: jest.fn(),
+      },
+    };
+    const map = new OverworldMap({
+      lowerSrc: "/test-lower",
+      upperSrc: "/test-upper",
+      gameObjects,
+      walls: { [`17,1`]: true },
+    });
+    const result = map.isSpaceTaken(
+      gameObjects.test.x,
+      gameObjects.test.y,
+      "right"
+    );
+
+    expect(result).toEqual(true);
+  });
 });

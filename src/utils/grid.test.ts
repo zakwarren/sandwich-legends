@@ -1,4 +1,9 @@
-import { withGrid, getCameraPosition } from "./grid";
+import {
+  withGrid,
+  getCameraPosition,
+  asGridCoords,
+  nextPosition,
+} from "./grid";
 
 describe("grid tools", () => {
   it("should adjust the value to the grid base value", () => {
@@ -21,5 +26,18 @@ describe("grid tools", () => {
 
     expect(result.x).toEqual(167);
     expect(result.y).toEqual(90);
+  });
+
+  it("should return the grid coordinates", () => {
+    const result = asGridCoords(2, 3);
+
+    expect(result).toEqual("32,48");
+  });
+
+  it("should return the next position", () => {
+    const result = nextPosition(1, 1, "right");
+
+    expect(result.x).toEqual(17);
+    expect(result.y).toEqual(1);
   });
 });
