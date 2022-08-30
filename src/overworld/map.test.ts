@@ -2,18 +2,34 @@ import { OverworldMap } from "./map";
 
 describe("OverworldMap", () => {
   it("should return the game objects", async () => {
-    const gameObjects = { test: { draw: jest.fn(), update: jest.fn() } };
+    const gameObjects = {
+      test: {
+        x: 1,
+        y: 1,
+        draw: jest.fn(),
+        setAnimation: jest.fn(),
+        update: jest.fn(),
+      },
+    };
     const map = new OverworldMap({
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
     });
 
-    expect(map.getGameObjects()).toEqual(gameObjects);
+    expect(map.mapGameObjects).toEqual(gameObjects);
   });
 
   it("should draw the lower image", () => {
-    const gameObjects = { test: { draw: jest.fn(), update: jest.fn() } };
+    const gameObjects = {
+      test: {
+        x: 1,
+        y: 1,
+        draw: jest.fn(),
+        setAnimation: jest.fn(),
+        update: jest.fn(),
+      },
+    };
     const map = new OverworldMap({
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
@@ -26,7 +42,15 @@ describe("OverworldMap", () => {
   });
 
   it("should draw the upper image", () => {
-    const gameObjects = { test: { draw: jest.fn(), update: jest.fn() } };
+    const gameObjects = {
+      test: {
+        x: 1,
+        y: 1,
+        draw: jest.fn(),
+        setAnimation: jest.fn(),
+        update: jest.fn(),
+      },
+    };
     const map = new OverworldMap({
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",

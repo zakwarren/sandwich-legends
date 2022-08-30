@@ -1,7 +1,10 @@
 import { Context } from "../types";
 
 export interface GameObject {
-  draw: (ctx: Context) => void;
+  x: number;
+  y: number;
+  draw: (ctx: Context, cameraPosition?: GameObject) => void;
+  setAnimation: (key: string) => void;
   update: (config: {}) => void;
 }
 

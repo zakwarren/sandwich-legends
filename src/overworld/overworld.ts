@@ -18,17 +18,25 @@ export class Overworld {
       // clear the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+      // establish the camera focus
+      const cameraFocus = this.map?.mapGameObjects["hero"];
+
+      // update all objects
+      const allObjectValues = Object.values(this.map?.mapGameObjects || {});
+      allObjectValues.forEach((object) => {
+        object.update({});
+      });
+
       // draw lower layer
-      this.map?.drawLowerImage(this.ctx);
+      this.map?.drawLowerImage(this.ctx, cameraFocus);
 
       // draw game objects
-      Object.values(this.map?.getGameObjects() || {}).forEach((object) => {
-        object.update({});
-        object.draw(this.ctx);
+      allObjectValues.forEach((object) => {
+        object.draw(this.ctx, cameraFocus);
       });
 
       // draw upper layer
-      this.map?.drawUpperImage(this.ctx);
+      this.map?.drawUpperImage(this.ctx, cameraFocus);
 
       requestAnimationFrame(step);
     };

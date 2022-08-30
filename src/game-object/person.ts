@@ -59,7 +59,7 @@ export class Person extends GameObject<Animations> {
     super(config);
   }
 
-  updatePosition() {
+  private updatePosition() {
     if (this.movingProgressRemaining > 0) {
       const [property, change] = this.directionUpdate.get(
         this.direction
@@ -69,14 +69,14 @@ export class Person extends GameObject<Animations> {
     }
   }
 
-  updateSprite() {
+  private updateSprite() {
     if (this.movingProgressRemaining === 0 && !this.directionInput?.direction) {
-      this.sprite.setAnimation(`idle-${this.direction}`);
+      this.setAnimation(`idle-${this.direction}`);
       return;
     }
 
     if (this.movingProgressRemaining > 0) {
-      this.sprite.setAnimation(`walk-${this.direction}`);
+      this.setAnimation(`walk-${this.direction}`);
     }
   }
 

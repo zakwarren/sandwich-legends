@@ -1,6 +1,5 @@
 import { Overworld } from "./overworld";
 import { Person } from "./game-object";
-import { withGrid } from "./utils";
 import { DirectionInput } from "./controls";
 
 const overworldMaps = {
@@ -9,14 +8,14 @@ const overworldMaps = {
     upperSrc: "/images/maps/DemoUpper.png",
     gameObjects: {
       hero: new Person({
-        x: withGrid(5),
-        y: withGrid(6),
+        x: 5,
+        y: 6,
         src: "/images/characters/people/hero.png",
         directionInput: new DirectionInput(),
       }),
       npc1: new Person({
-        x: withGrid(7),
-        y: withGrid(9),
+        x: 7,
+        y: 9,
         src: "/images/characters/people/npc1.png",
       }),
     },
@@ -26,18 +25,18 @@ const overworldMaps = {
     upperSrc: "/images/maps/KitchenUpper.png",
     gameObjects: {
       hero: new Person({
-        x: withGrid(3),
-        y: withGrid(5),
+        x: 3,
+        y: 5,
         src: "/images/characters/people/hero.png",
       }),
       npc1: new Person({
-        x: withGrid(9),
-        y: withGrid(6),
+        x: 9,
+        y: 6,
         src: "/images/characters/people/npc1.png",
       }),
       npc2: new Person({
-        x: withGrid(10),
-        y: withGrid(8),
+        x: 10,
+        y: 8,
         src: "/images/characters/people/npc2.png",
       }),
     },

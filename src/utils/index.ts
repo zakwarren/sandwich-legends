@@ -1,1 +1,1 @@
-export { GRID_SIZE, withGrid } from "./grid";
+export * from "./grid";

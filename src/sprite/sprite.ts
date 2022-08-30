@@ -1,4 +1,5 @@
-import { Context, BaseAnimations } from "../types";
+import { Context, BaseAnimations, CameraPosition } from "../types";
+import { getCameraPosition } from "../utils";
 
 interface GameObject {
   x: number;
@@ -81,9 +82,10 @@ export class Sprite<Animations extends BaseAnimations> {
     }
   }
 
-  draw(ctx: Context, gameObject: GameObject) {
-    const x = gameObject.x - 8;
-    const y = gameObject.y - 18;
+  draw(ctx: Context, gameObject: GameObject, cameraFocus?: CameraPosition) {
+    const cameraPosition = getCameraPosition(cameraFocus);
+    const x = gameObject.x - 8 + cameraPosition.x;
+    const y = gameObject.y - 18 + cameraPosition.y;
 
     if (this.isShadowLoaded) {
       ctx.drawImage(this.shadow, x, y);

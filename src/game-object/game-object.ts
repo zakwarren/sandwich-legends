@@ -1,17 +1,18 @@
 import { Sprite } from "../sprite";
-import { Context, BaseAnimations, Direction } from "../types";
+import { Context, BaseAnimations, Direction, CameraPosition } from "../types";
+import { withGrid } from "../utils";
 import { GameObjectConfig } from "./types";
 
 export class GameObject<Animations extends BaseAnimations> {
   public x = 0;
   public y = 0;
-  protected sprite: Sprite<Animations>;
+  private sprite: Sprite<Animations>;
   protected direction: Direction = "down";
   protected directionInput: GameObjectConfig["directionInput"] | null = null;
 
   constructor(config: GameObjectConfig) {
-    this.x = config.x || this.x;
-    this.y = config.y || this.y;
+    this.x = withGrid(config.x);
+    this.y = withGrid(config.y);
     this.sprite = new Sprite<Animations>({
       src: config.src,
       animations: (config.animations as Animations) || {
@@ -23,8 +24,12 @@ export class GameObject<Animations extends BaseAnimations> {
     this.directionInput = config.directionInput || null;
   }
 
-  draw(ctx: Context) {
-    this.sprite.draw(ctx, this);
+  draw(ctx: Context, cameraFocus?: CameraPosition) {
+    this.sprite.draw(ctx, this, cameraFocus);
+  }
+
+  setAnimation(key: string) {
+    this.sprite.setAnimation(key);
   }
 
   update() {}

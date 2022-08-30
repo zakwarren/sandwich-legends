@@ -8,3 +8,8 @@ export interface BaseAnimations {
 }
 
 export type Direction = "up" | "down" | "left" | "right";
+
+export interface CameraPosition {
+  x: number;
+  y: number;
+}

@@ -1,4 +1,5 @@
-import { Context } from "../types";
+import { CameraPosition, Context } from "../types";
+import { getCameraPosition } from "../utils";
 import { MapConfig } from "./types";
 
 export class OverworldMap {
@@ -12,15 +13,17 @@ export class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
-  getGameObjects() {
+  get mapGameObjects() {
     return this.gameObjects;
   }
 
-  drawLowerImage(ctx: Context) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx: Context, cameraFocus?: CameraPosition) {
+    const cameraPosition = getCameraPosition(cameraFocus);
+    ctx.drawImage(this.lowerImage, cameraPosition.x, cameraPosition.y);
   }
 
-  drawUpperImage(ctx: Context) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx: Context, cameraFocus?: CameraPosition) {
+    const cameraPosition = getCameraPosition(cameraFocus);
+    ctx.drawImage(this.upperImage, cameraPosition.x, cameraPosition.y);
   }
 }
