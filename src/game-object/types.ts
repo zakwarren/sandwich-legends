@@ -1,4 +1,4 @@
-import { Direction } from "../types";
+import { BaseAnimations, Direction } from "../types";
 
 export interface GameObjectConfig {
   x?: number;
@@ -6,4 +6,5 @@ export interface GameObjectConfig {
   src: string;
   direction?: Direction;
   directionInput?: { direction: Direction };
+  animations?: BaseAnimations;
 }

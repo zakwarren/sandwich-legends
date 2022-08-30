@@ -8,8 +8,9 @@ interface GameObject {
 interface SpriteConfig<Animations> {
   src: string;
   animations: Animations;
-  currentAnimation?: string;
   useShadow?: boolean;
+  currentAnimation?: string;
+  animationFrameLimit?: number;
 }
 
 export class Sprite<Animations extends BaseAnimations> {
@@ -18,9 +19,11 @@ export class Sprite<Animations extends BaseAnimations> {
   private isLoaded = false;
   private useShadow = false;
   private isShadowLoaded = false;
-  // private animations: Animations;
-  private currentAnimation = "idleDown";
-  // private currentAnimationFrame = 0;
+  private animations;
+  private currentAnimation: keyof Animations = "idleDown";
+  private currentAnimationFrame = 0;
+  private animationFrameLimit = 4;
+  private animationFrameProgress;
 
   constructor(config: SpriteConfig<Animations>) {
     // setup the image
@@ -39,8 +42,38 @@ export class Sprite<Animations extends BaseAnimations> {
     }
 
     // configure animations and initial state
-    // this.animations = config.animations || { idleDown: [[0, 0]] };
+    this.animations = config.animations || { "idle-down": [[0, 0]] };
     this.currentAnimation = config.currentAnimation || this.currentAnimation;
+    this.animationFrameLimit =
+      config.animationFrameLimit || this.animationFrameLimit;
+    this.animationFrameProgress = this.animationFrameLimit;
+  }
+
+  get frame() {
+    // @ts-ignore
+    return this.animations[this.currentAnimation][this.currentAnimationFrame];
+  }
+
+  setAnimation(key: keyof Animations) {
+    if (this.currentAnimation !== key) {
+      this.currentAnimation = key;
+      this.currentAnimationFrame = 0;
+      this.animationFrameProgress = this.animationFrameLimit;
+    }
+  }
+
+  private updateAnimationProgress() {
+    if (this.animationFrameProgress > 0) {
+      this.animationFrameProgress -= 1;
+      return;
+    }
+
+    this.animationFrameProgress = this.animationFrameLimit;
+    this.currentAnimationFrame += 1;
+
+    if (this.frame === undefined) {
+      this.currentAnimationFrame = 0;
+    }
   }
 
   draw(ctx: Context, gameObject: GameObject) {
@@ -51,8 +84,12 @@ export class Sprite<Animations extends BaseAnimations> {
       ctx.drawImage(this.shadow, x, y);
     }
 
+    const [frameX, frameY] = this.frame;
+
     if (this.isLoaded) {
-      ctx.drawImage(this.image, 0, 0, 32, 32, x, y, 32, 32);
+      ctx.drawImage(this.image, frameX * 32, frameY * 32, 32, 32, x, y, 32, 32);
     }
+
+    this.updateAnimationProgress();
   }
 }

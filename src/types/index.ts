@@ -3,7 +3,8 @@ export interface Context {
 }
 
 export interface BaseAnimations {
-  idleDown: number[][];
+  [key: string]: [number, number][];
+  "idle-down": [number, number][];
 }
 
 export type Direction = "up" | "down" | "left" | "right";

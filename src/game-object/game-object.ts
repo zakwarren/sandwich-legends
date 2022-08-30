@@ -2,19 +2,21 @@ import { Sprite } from "../sprite";
 import { Context, BaseAnimations, Direction } from "../types";
 import { GameObjectConfig } from "./types";
 
-export class GameObject {
+export class GameObject<Animations extends BaseAnimations> {
   public x = 0;
   public y = 0;
-  private sprite: Sprite<BaseAnimations>;
+  protected sprite: Sprite<Animations>;
   protected direction: Direction = "down";
   protected directionInput: GameObjectConfig["directionInput"] | null = null;
 
   constructor(config: GameObjectConfig) {
     this.x = config.x || this.x;
     this.y = config.y || this.y;
-    this.sprite = new Sprite<BaseAnimations>({
+    this.sprite = new Sprite<Animations>({
       src: config.src,
-      animations: { idleDown: [[0, 0]] },
+      animations: (config.animations as Animations) || {
+        "idle-down": [[0, 0]],
+      },
       useShadow: true,
     });
     this.direction = config.direction || "down";
