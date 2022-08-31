@@ -1,7 +1,7 @@
 import { GameObject } from "./game-object";
-import { GameObjectConfig } from "./types";
-import { BaseAnimations, Direction, WorldMap } from "../types";
-import { GRID_SIZE } from "../utils";
+import { GameObjectConfig, UpdateState, BehaviourConfig } from "./types";
+import { BaseAnimations, Direction } from "../types";
+import { emitEvent, EVENT_NAMES, GRID_SIZE } from "../utils";
 
 type DirectionUpdate = ["x" | "y", number];
 
@@ -13,10 +13,6 @@ interface Animations extends BaseAnimations {
   "walk-down": [number, number][];
   "walk-right": [number, number][];
   "walk-up": [number, number][];
-}
-
-interface UpdateState {
-  map: WorldMap;
 }
 
 export class Person extends GameObject<Animations> {
@@ -69,6 +65,10 @@ export class Person extends GameObject<Animations> {
     ) as DirectionUpdate;
     this[property] += change;
     this.movingProgressRemaining -= 1;
+
+    if (this.movingProgressRemaining === 0) {
+      emitEvent(EVENT_NAMES.personWalkingComplete, { whoId: this.id });
+    }
   }
 
   private updateSprite() {
@@ -79,10 +79,7 @@ export class Person extends GameObject<Animations> {
     this.setAnimation(`idle-${this.direction}`);
   }
 
-  startBehaviour(
-    { map }: UpdateState,
-    behaviour: { type: "walk"; direction: Direction }
-  ) {
+  startBehaviour({ map }: UpdateState, behaviour: BehaviourConfig) {
     // set character direction
     this.direction = behaviour.direction;
     // go here if type is walk and space is not taken
@@ -92,6 +89,13 @@ export class Person extends GameObject<Animations> {
     ) {
       map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = GRID_SIZE;
+      this.updateSprite();
+    }
+
+    if (behaviour.type === "stand") {
+      setTimeout(() => {
+        emitEvent(EVENT_NAMES.personStandComplete, { whoId: this.id });
+      }, behaviour.time);
     }
   }
 

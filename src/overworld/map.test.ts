@@ -3,11 +3,13 @@ import { OverworldMap } from "./map";
 describe("OverworldMap", () => {
   const createGameObjects = () => ({
     test: {
+      id: "",
       x: 1,
       y: 1,
       mount: jest.fn(),
       draw: jest.fn(),
       setAnimation: jest.fn(),
+      startBehaviour: jest.fn(),
       update: jest.fn(),
     },
   });
@@ -24,16 +26,7 @@ describe("OverworldMap", () => {
   });
 
   it("should draw the lower image", () => {
-    const gameObjects = {
-      test: {
-        x: 1,
-        y: 1,
-        mount: jest.fn(),
-        draw: jest.fn(),
-        setAnimation: jest.fn(),
-        update: jest.fn(),
-      },
-    };
+    const gameObjects = createGameObjects();
     const map = new OverworldMap({
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
@@ -84,6 +77,7 @@ describe("OverworldMap", () => {
     });
     map.mountObjects();
 
+    expect(gameObjects.test.id).toEqual("test");
     expect(gameObjects.test.mount).toHaveBeenCalled();
   });
 

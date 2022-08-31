@@ -7,6 +7,7 @@ export class OverworldMap {
   private lowerImage = new Image();
   private upperImage = new Image();
   private walls;
+  public isCutscenePlaying = false;
 
   constructor(config: MapConfig) {
     this.gameObjects = config.gameObjects;
@@ -39,7 +40,10 @@ export class OverworldMap {
   }
 
   mountObjects() {
-    Object.values(this.gameObjects).forEach((object) => {
+    Object.keys(this.gameObjects).forEach((key) => {
+      const object = this.gameObjects[key];
+      object.id = key;
+
       object.mount(this);
     });
   }
