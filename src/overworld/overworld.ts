@@ -31,9 +31,11 @@ export class Overworld {
       this.map?.drawLowerImage(this.ctx, cameraFocus);
 
       // draw game objects
-      allObjectValues.forEach((object) => {
-        object.draw(this.ctx, cameraFocus);
-      });
+      allObjectValues
+        .sort((a, b) => a.y - b.y)
+        .forEach((object) => {
+          object.draw(this.ctx, cameraFocus);
+        });
 
       // draw upper layer
       this.map?.drawUpperImage(this.ctx, cameraFocus);
