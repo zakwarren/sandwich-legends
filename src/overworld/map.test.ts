@@ -10,6 +10,7 @@ describe("OverworldMap", () => {
       draw: jest.fn(),
       setAnimation: jest.fn(),
       startBehaviour: jest.fn(),
+      doBehaviourEvent: jest.fn(),
       update: jest.fn(),
     },
   });

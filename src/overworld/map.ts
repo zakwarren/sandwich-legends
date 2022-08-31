@@ -59,6 +59,11 @@ export class OverworldMap {
     }
 
     this.isCutscenePlaying = false;
+
+    // reset NPCs to do their idle behaviour
+    Object.values(this.gameObjects).forEach((object) =>
+      object.doBehaviourEvent(this)
+    );
   }
 
   addWall(x: number, y: number) {

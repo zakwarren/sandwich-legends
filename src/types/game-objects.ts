@@ -12,6 +12,7 @@ export interface GameObject {
     state: { map: WorldMap },
     behaviour: { type: Behaviour; direction: Direction; time?: number }
   ) => void;
+  doBehaviourEvent: (map: WorldMap) => Promise<void>;
   update: (config: any) => void;
 }
 
