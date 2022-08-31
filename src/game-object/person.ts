@@ -104,7 +104,7 @@ export class Person extends GameObject<Animations> {
       this.updatePosition();
     } else {
       // case: we're player input ready and have a direction selected
-      if (this.directionInput?.direction) {
+      if (!state.map.isCutscenePlaying && this.directionInput?.direction) {
         this.startBehaviour(state, {
           type: "walk",
           direction: this.directionInput.direction,

@@ -20,6 +20,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
     });
 
     expect(map.mapGameObjects).toEqual(gameObjects);
@@ -31,6 +32,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
     });
     const ctx = { drawImage: jest.fn() };
     map.drawLowerImage(ctx);
@@ -44,6 +46,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
     });
     const ctx = { drawImage: jest.fn() };
     map.drawUpperImage(ctx);
@@ -57,6 +60,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
       walls: { ["17,1"]: true },
     });
     const result = map.isSpaceTaken(
@@ -74,6 +78,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
     });
     map.mountObjects();
 
@@ -87,6 +92,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
       walls: { ["17,1"]: true },
     });
     map.addWall(2, 2);
@@ -100,6 +106,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
       walls: { ["17,1"]: true },
     });
     map.removeWall(17, 1);
@@ -113,6 +120,7 @@ describe("OverworldMap", () => {
       lowerSrc: "/test-lower",
       upperSrc: "/test-upper",
       gameObjects,
+      createEvent: jest.fn(),
       walls: { ["17,1"]: true },
     });
     map.moveWall(17, 1, "down");

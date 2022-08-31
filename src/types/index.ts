@@ -5,5 +5,6 @@ export type {
   Direction,
   Behaviour,
   GameEvent,
+  EventHandler,
 } from "./behaviour";
 export type { WorldMap, GameObject } from "./game-objects";

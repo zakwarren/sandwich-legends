@@ -4,6 +4,7 @@ import {
   Direction,
   WorldMap,
   GameEvent,
+  EventHandler,
 } from "../types";
 
 export interface BehaviourConfig {
@@ -14,10 +15,6 @@ export interface BehaviourConfig {
 
 export interface UpdateState {
   map: WorldMap;
-}
-
-interface EventHandler {
-  init: () => Promise<void>;
 }
 
 export interface GameObjectConfig {

@@ -1,4 +1,4 @@
-import { CameraPosition, Context, Direction } from "../types";
+import { CameraPosition, Context, Direction, GameEvent } from "../types";
 import { getCameraPosition, nextPosition } from "../utils";
 import { MapConfig } from "./types";
 
@@ -8,12 +8,14 @@ export class OverworldMap {
   private upperImage = new Image();
   private walls;
   public isCutscenePlaying = false;
+  private createEvent;
 
   constructor(config: MapConfig) {
     this.gameObjects = config.gameObjects;
     this.lowerImage.src = config.lowerSrc;
     this.upperImage.src = config.upperSrc;
     this.walls = config.walls || {};
+    this.createEvent = config.createEvent;
   }
 
   get mapGameObjects() {
@@ -46,6 +48,17 @@ export class OverworldMap {
 
       object.mount(this);
     });
+  }
+
+  async startCutscene(events: GameEvent[]) {
+    this.isCutscenePlaying = true;
+
+    for (let i = 0; i < events.length; i++) {
+      const eventHandler = this.createEvent({ map: this, event: events[i] });
+      await eventHandler.init();
+    }
+
+    this.isCutscenePlaying = false;
   }
 
   addWall(x: number, y: number) {

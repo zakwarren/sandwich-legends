@@ -8,6 +8,7 @@ const overworldMaps = {
   DemoRoom: {
     lowerSrc: "/images/maps/DemoLower.png",
     upperSrc: "/images/maps/DemoUpper.png",
+    createEvent: createOverworldEvent,
     gameObjects: {
       hero: new Person({
         x: 5,
@@ -52,6 +53,7 @@ const overworldMaps = {
   Kitchen: {
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
+    createEvent: createOverworldEvent,
     gameObjects: {
       hero: new Person({
         x: 3,

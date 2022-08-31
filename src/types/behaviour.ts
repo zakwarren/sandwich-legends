@@ -17,3 +17,7 @@ export interface GameEvent {
   time?: number;
   who: string;
 }
+
+export interface EventHandler {
+  init: () => Promise<Behaviour>;
+}

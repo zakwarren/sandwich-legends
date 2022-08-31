@@ -49,5 +49,13 @@ export class Overworld {
     this.map = new OverworldMap(this.overworldMaps["DemoRoom"]);
     this.map.mountObjects();
     this.startGameLoop();
+
+    this.map.startCutscene([
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "hero", type: "walk", direction: "down" },
+      { who: "npc1", type: "walk", direction: "left" },
+      { who: "npc1", type: "walk", direction: "left" },
+      { who: "npc1", type: "stand", direction: "up", time: 800 },
+    ]);
   }
 }
