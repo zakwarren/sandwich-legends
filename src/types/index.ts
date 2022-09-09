@@ -6,5 +6,6 @@ export type {
   Behaviour,
   GameEvent,
   EventHandler,
+  KeyPressListener,
 } from "./behaviour";
 export type { WorldMap, GameObject } from "./game-objects";

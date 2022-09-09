@@ -22,3 +22,7 @@ export interface GameEvent {
 export interface EventHandler {
   init: () => Promise<Behaviour>;
 }
+
+export interface KeyPressListener {
+  unbind: () => void;
+}

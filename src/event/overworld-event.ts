@@ -1,13 +1,22 @@
-import { WorldMap, GameEvent, Behaviour } from "../types";
+import { WorldMap, GameEvent, Behaviour, KeyPressListener } from "../types";
 import { EVENT_NAMES } from "../utils";
 
 type Resolve = () => void;
+type buildKeyPressListener = (
+  keyCode: string,
+  callback: () => void
+) => KeyPressListener;
 
 export interface Dependencies {
   element: Element;
-  createTextMessage: (config: { text: string; onComplete: () => void }) => {
+  createTextMessage: (config: {
+    text: string;
+    onComplete: () => void;
+    buildKeyPressListener: buildKeyPressListener;
+  }) => {
     init: (container: Element) => void;
   };
+  buildKeyPressListener: buildKeyPressListener;
 }
 
 export interface EventConfig {
@@ -18,15 +27,17 @@ export interface EventConfig {
 export class OverworldEvent {
   private element;
   private createTextMessage;
+  private buildKeyPressListener;
   private map;
   private event;
 
   constructor(
-    { element, createTextMessage }: Dependencies,
+    { element, createTextMessage, buildKeyPressListener }: Dependencies,
     { map, event }: EventConfig
   ) {
     this.element = element;
     this.createTextMessage = createTextMessage;
+    this.buildKeyPressListener = buildKeyPressListener;
     this.map = map;
     this.event = event;
   }
@@ -79,6 +90,7 @@ export class OverworldEvent {
     const message = this.createTextMessage({
       text: this.event.text || "",
       onComplete: resolve,
+      buildKeyPressListener: this.buildKeyPressListener,
     });
     message.init(this.element);
   }

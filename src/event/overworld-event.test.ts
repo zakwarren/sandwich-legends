@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 import { OverworldEvent } from "./overworld-event";
-import { GameEvent, WorldMap } from "../types";
+import { GameEvent, WorldMap, KeyPressListener } from "../types";
 import { emitEvent, EVENT_NAMES } from "../utils";
 
 describe("OverworldEvent", () => {
@@ -28,6 +28,11 @@ describe("OverworldEvent", () => {
     () => (config: { text: string; onComplete: () => void }) => ({
       init: config.onComplete,
     });
+  const buildBuildKeyPressListener =
+    () =>
+    (_keyCode: string, _callback: () => void): KeyPressListener => ({
+      unbind: jest.fn(),
+    });
 
   it("should listen for a stand event", () => {
     const map = createMap();
@@ -37,7 +42,11 @@ describe("OverworldEvent", () => {
       who: "tester",
     };
     const eventHandler = new OverworldEvent(
-      { element: createElement(), createTextMessage: buildCreateTextMessage() },
+      {
+        element: createElement(),
+        createTextMessage: buildCreateTextMessage(),
+        buildKeyPressListener: buildBuildKeyPressListener(),
+      },
       { map, event }
     );
 
@@ -55,7 +64,11 @@ describe("OverworldEvent", () => {
       who: "tester",
     };
     const eventHandler = new OverworldEvent(
-      { element: createElement(), createTextMessage: buildCreateTextMessage() },
+      {
+        element: createElement(),
+        createTextMessage: buildCreateTextMessage(),
+        buildKeyPressListener: buildBuildKeyPressListener(),
+      },
       { map, event }
     );
 
@@ -74,7 +87,11 @@ describe("OverworldEvent", () => {
       text: "Hello there",
     };
     const eventHandler = new OverworldEvent(
-      { element: createElement(), createTextMessage: buildCreateTextMessage() },
+      {
+        element: createElement(),
+        createTextMessage: buildCreateTextMessage(),
+        buildKeyPressListener: buildBuildKeyPressListener(),
+      },
       { map, event }
     );
     const res = await eventHandler.init();
