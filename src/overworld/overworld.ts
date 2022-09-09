@@ -56,6 +56,13 @@ export class Overworld {
       { who: "npc1", type: "walk", direction: "left" },
       { who: "npc1", type: "walk", direction: "left" },
       { who: "npc1", type: "stand", direction: "up", time: 800 },
+      {
+        who: "npc1",
+        type: "textMessage",
+        direction: "up",
+        text: "Hello there",
+      },
+      { who: "npc1", type: "walk", direction: "right" },
     ]);
   }
 }

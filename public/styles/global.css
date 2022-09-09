@@ -1,3 +1,13 @@
+:root {
+  --border-colour: #291d4d;
+  --dialog-background: #fff3b4;
+
+  --menu-background: #ffe8d2;
+  --menu-border-colour: #a48465;
+  --menu-font-colour: #3a160d;
+  --menu-selected-background: #7fc2ff;
+}
+
 * {
   box-sizing: border-box;
 }

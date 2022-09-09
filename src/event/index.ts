@@ -1,7 +1,5 @@
-import { OverworldEvent } from "./overworld-event";
-import { WorldMap, GameEvent } from "../types";
+import { OverworldEvent, Dependencies, EventConfig } from "./overworld-event";
 
-export const createOverworldEvent = (config: {
-  map: WorldMap;
-  event: GameEvent;
-}) => new OverworldEvent(config);
+export const buildCreateOverworldEvent =
+  (dependencies: Dependencies) => (config: EventConfig) =>
+    new OverworldEvent(dependencies, config);

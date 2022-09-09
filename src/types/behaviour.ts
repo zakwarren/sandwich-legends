@@ -9,13 +9,14 @@ export interface BaseAnimations {
 
 export type Direction = "up" | "down" | "left" | "right";
 
-export type Behaviour = "stand" | "walk";
+export type Behaviour = "stand" | "walk" | "textMessage";
 
 export interface GameEvent {
   type: Behaviour;
   direction: Direction;
   time?: number;
   who: string;
+  text?: string;
 }
 
 export interface EventHandler {

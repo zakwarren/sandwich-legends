@@ -1,8 +1,14 @@
 import { Overworld } from "./overworld";
 import { Person } from "./game-object";
-import { createOverworldEvent } from "./event";
+import { buildCreateOverworldEvent } from "./event";
 import { DirectionInput } from "./controls";
 import { asGridCoords } from "./utils";
+import { createTextMessage } from "./text-message";
+
+const createOverworldEvent = buildCreateOverworldEvent({
+  element: document.querySelector(".game-container") as Element,
+  createTextMessage,
+});
 
 const overworldMaps = {
   DemoRoom: {

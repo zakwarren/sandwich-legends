@@ -3,11 +3,30 @@ import { EVENT_NAMES } from "../utils";
 
 type Resolve = () => void;
 
+export interface Dependencies {
+  element: Element;
+  createTextMessage: (config: { text: string; onComplete: () => void }) => {
+    init: (container: Element) => void;
+  };
+}
+
+export interface EventConfig {
+  map: WorldMap;
+  event: GameEvent;
+}
+
 export class OverworldEvent {
+  private element;
+  private createTextMessage;
   private map;
   private event;
 
-  constructor({ map, event }: { map: WorldMap; event: GameEvent }) {
+  constructor(
+    { element, createTextMessage }: Dependencies,
+    { map, event }: EventConfig
+  ) {
+    this.element = element;
+    this.createTextMessage = createTextMessage;
     this.map = map;
     this.event = event;
   }
@@ -54,6 +73,14 @@ export class OverworldEvent {
       EVENT_NAMES.personWalkingComplete,
       completeHandler
     );
+  }
+
+  textMessage(resolve: Resolve) {
+    const message = this.createTextMessage({
+      text: this.event.text || "",
+      onComplete: resolve,
+    });
+    message.init(this.element);
   }
 
   init(): Promise<Behaviour> {
