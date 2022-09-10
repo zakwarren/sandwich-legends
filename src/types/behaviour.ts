@@ -17,6 +17,7 @@ export interface GameEvent {
   time?: number;
   who: string;
   text?: string;
+  faceHero?: string;
 }
 
 export interface EventHandler {

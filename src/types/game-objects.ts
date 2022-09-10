@@ -1,19 +1,27 @@
 import { CameraPosition } from "./camera";
-import { Context, Behaviour, Direction } from "./behaviour";
+import { Context, Behaviour, Direction, GameEvent } from "./behaviour";
+
+interface BehaviourConfig {
+  type: Behaviour;
+  direction: Direction;
+  time?: number;
+}
 
 export interface GameObject {
   id: string | null;
   x: number;
   y: number;
+  myDirection: Direction;
   mount: (map: WorldMap) => void;
   draw: (ctx: Context, cameraPosition?: CameraPosition) => void;
   setAnimation: (key: string) => void;
   startBehaviour: (
     state: { map: WorldMap },
-    behaviour: { type: Behaviour; direction: Direction; time?: number }
+    behaviour: BehaviourConfig
   ) => void;
   doBehaviourEvent: (map: WorldMap) => Promise<void>;
   update: (config: any) => void;
+  talking?: { events: GameEvent[] }[] | undefined;
 }
 
 export interface WorldMap {

@@ -1,7 +1,8 @@
 import { OverworldMap } from "./map";
+import { GameObject } from "../types";
 
 describe("OverworldMap", () => {
-  const createGameObjects = () => ({
+  const createGameObjects = (): { [key: string]: GameObject } => ({
     test: {
       id: "",
       x: 1,
@@ -12,6 +13,7 @@ describe("OverworldMap", () => {
       startBehaviour: jest.fn(),
       doBehaviourEvent: jest.fn(),
       update: jest.fn(),
+      myDirection: "up",
     },
   });
 

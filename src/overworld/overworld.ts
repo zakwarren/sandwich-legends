@@ -1,16 +1,32 @@
+import { KeyPressListener } from "../types";
 import { OverworldMap } from "./map";
 import { Maps } from "./types";
+
+interface Dependencies {
+  buildKeyPressListener: (
+    keyCode: string,
+    callback: () => void
+  ) => KeyPressListener;
+}
 
 export class Overworld {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private map: OverworldMap | null = null;
 
-  constructor(private element: Element, private overworldMaps: Maps) {
+  private buildKeyPressListener;
+
+  constructor(
+    { buildKeyPressListener }: Dependencies,
+    private element: Element,
+    private overworldMaps: Maps
+  ) {
     this.canvas = this.element.querySelector(
       ".game-canvas"
     ) as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+
+    this.buildKeyPressListener = buildKeyPressListener;
   }
 
   private startGameLoop() {
@@ -45,10 +61,19 @@ export class Overworld {
     step();
   }
 
+  bindActionInput() {
+    this.buildKeyPressListener("Enter", () => {
+      // Is there a person here to talk to?
+      this.map?.checkForActionCutscene();
+    });
+  }
+
   init() {
     this.map = new OverworldMap(this.overworldMaps["DemoRoom"]);
     this.map.mountObjects();
     this.startGameLoop();
+
+    this.bindActionInput();
 
     this.map.startCutscene([
       { who: "hero", type: "walk", direction: "down" },

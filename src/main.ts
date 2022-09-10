@@ -35,6 +35,26 @@ const overworldMaps = {
           { type: "stand", direction: "right", time: 1200 },
           { type: "stand", direction: "up", time: 300 },
         ],
+        talking: [
+          {
+            events: [
+              {
+                type: "textMessage",
+                who: "npc1",
+                direction: "up",
+                text: "Hello there!",
+                faceHero: "npc1",
+              },
+              {
+                type: "textMessage",
+                who: "npc1",
+                direction: "up",
+                text: "I'm working here...",
+              },
+              { type: "walk", who: "hero", direction: "up" },
+            ],
+          },
+        ],
       }),
       npc2: new Person({
         x: 3,
@@ -86,6 +106,10 @@ const overworldMaps = {
 
 const root = document.querySelector(".game-container");
 if (root) {
-  const overworld = new Overworld(root, overworldMaps);
+  const overworld = new Overworld(
+    { buildKeyPressListener },
+    root,
+    overworldMaps
+  );
   overworld.init();
 }

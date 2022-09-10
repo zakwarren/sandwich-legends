@@ -1,5 +1,5 @@
 import { WorldMap, GameEvent, Behaviour, KeyPressListener } from "../types";
-import { EVENT_NAMES } from "../utils";
+import { EVENT_NAMES, oppositeDirection } from "../utils";
 
 type Resolve = () => void;
 type buildKeyPressListener = (
@@ -87,6 +87,13 @@ export class OverworldEvent {
   }
 
   textMessage(resolve: Resolve) {
+    if (this.event.faceHero) {
+      const obj = this.map.mapGameObjects[this.event.faceHero];
+      obj.myDirection = oppositeDirection(
+        this.map.mapGameObjects["hero"].myDirection
+      );
+    }
+
     const message = this.createTextMessage({
       text: this.event.text || "",
       onComplete: resolve,

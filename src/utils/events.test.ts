@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 import { emitEvent } from "./events";
 
-describe("events", () => {
+describe("event utilities", () => {
   it("should dispatch a custom event", () => {
     const dispatchEventSpy = jest.spyOn(document, "dispatchEvent");
     const type = "testEvent";

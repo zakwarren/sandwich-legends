@@ -5,7 +5,7 @@ import {
   nextPosition,
 } from "./grid";
 
-describe("grid tools", () => {
+describe("grid utilities", () => {
   it("should adjust the value to the grid base value", () => {
     const n = 10;
     const result = withGrid(n);

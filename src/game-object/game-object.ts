@@ -6,6 +6,7 @@ import {
   CameraPosition,
   WorldMap,
   Behaviour,
+  GameEvent,
 } from "../types";
 import { withGrid } from "../utils";
 import { BehaviourConfig, GameObjectConfig, UpdateState } from "./types";
@@ -23,6 +24,7 @@ export class GameObject<Animations extends BaseAnimations> {
   private behaviourLoop: BehaviourConfig[] = [];
   private behaviourLoopIndex = 0;
   private createEvent;
+  public talking: { events: GameEvent[] }[] | undefined;
 
   constructor(config: GameObjectConfig) {
     this.x = withGrid(config.x);
@@ -39,6 +41,14 @@ export class GameObject<Animations extends BaseAnimations> {
 
     this.behaviourLoop = config.behaviourLoop || this.behaviourLoop;
     this.createEvent = config.createEvent;
+    this.talking = config.talking;
+  }
+
+  get myDirection() {
+    return this.direction;
+  }
+  set myDirection(newDirection: Direction) {
+    this.direction = newDirection;
   }
 
   async doBehaviourEvent(map: WorldMap) {

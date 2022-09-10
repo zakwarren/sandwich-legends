@@ -66,6 +66,18 @@ export class OverworldMap {
     );
   }
 
+  checkForActionCutscene() {
+    const hero = this.gameObjects["hero"];
+    const nextCoords = nextPosition(hero.x, hero.y, hero.myDirection);
+    const match = Object.values(this.gameObjects).find(
+      (object) =>
+        `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
+    );
+    if (!this.isCutscenePlaying && match && match.talking?.length) {
+      this.startCutscene(match.talking[0].events);
+    }
+  }
+
   addWall(x: number, y: number) {
     this.walls[`${x},${y}`] = true;
   }

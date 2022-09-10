@@ -21,6 +21,7 @@ describe("OverworldEvent", () => {
         startBehaviour: jest.fn(),
         doBehaviourEvent: jest.fn(),
         update: jest.fn(),
+        myDirection: "up",
       },
     },
   });

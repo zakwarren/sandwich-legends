@@ -11,6 +11,7 @@ export interface BehaviourConfig {
   type: Behaviour;
   direction: Direction;
   time?: number;
+  text?: string;
 }
 
 export interface UpdateState {
@@ -26,4 +27,5 @@ export interface GameObjectConfig {
   animations?: BaseAnimations;
   behaviourLoop?: BehaviourConfig[];
   createEvent: (config: { map: WorldMap; event: GameEvent }) => EventHandler;
+  talking?: { events: GameEvent[] }[];
 }
