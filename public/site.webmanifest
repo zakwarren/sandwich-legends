@@ -1,7 +1,7 @@
 {
-  "id": "pizza-legends",
-  "name": "Pizza Legends",
-  "short_name": "Pizza Legends",
+  "id": "sandwich-legends",
+  "name": "Sandwich Legends",
+  "short_name": "Sandwich Legends",
   "icons": [
     {
       "src": "/icons/android-chrome-192x192.png",
