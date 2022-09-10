@@ -1,4 +1,5 @@
 import { KeyPressListener } from "../types";
+import { addEventListener } from "../utils";
 import { OverworldMap } from "./map";
 import { Maps } from "./types";
 
@@ -68,12 +69,23 @@ export class Overworld {
     });
   }
 
+  bindHeroPositionCheck() {
+    addEventListener("personWalkingComplete", (e) => {
+      const detail = (<CustomEvent>e).detail;
+      if (detail.whoId === "hero") {
+        // hero's position has changed
+        this.map?.checkForFootstepCutscene();
+      }
+    });
+  }
+
   init() {
     this.map = new OverworldMap(this.overworldMaps["DemoRoom"]);
     this.map.mountObjects();
     this.startGameLoop();
 
     this.bindActionInput();
+    this.bindHeroPositionCheck();
 
     this.map.startCutscene([
       { who: "hero", type: "walk", direction: "down" },

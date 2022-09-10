@@ -6,6 +6,7 @@ export interface MapConfig {
   gameObjects: { [key: string]: GameObject };
   walls?: { [key: string]: boolean };
   createEvent: (config: { map: WorldMap; event: GameEvent }) => EventHandler;
+  cutsceneSpaces?: { [key: string]: { events: GameEvent[] }[] };
 }
 
 export interface Maps {

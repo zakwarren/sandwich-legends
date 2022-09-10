@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 import { OverworldEvent } from "./overworld-event";
 import { GameEvent, WorldMap, KeyPressListener } from "../types";
-import { emitEvent, EVENT_NAMES } from "../utils";
+import { emitEvent } from "../utils";
 
 describe("OverworldEvent", () => {
   const createElement = () => document.createElement("div");
@@ -54,7 +54,7 @@ describe("OverworldEvent", () => {
     eventHandler.init().then((res) => {
       expect(res).toEqual("stand");
     });
-    emitEvent(EVENT_NAMES.personStandComplete, { whoId: event.who });
+    emitEvent("personStandComplete", { whoId: event.who });
   });
 
   it("should listen for a walk event", () => {
@@ -76,7 +76,7 @@ describe("OverworldEvent", () => {
     eventHandler.init().then((res) => {
       expect(res).toEqual("walk");
     });
-    emitEvent(EVENT_NAMES.personWalkingComplete, { whoId: event.who });
+    emitEvent("personWalkingComplete", { whoId: event.who });
   });
 
   it("should listen for a text message event", async () => {

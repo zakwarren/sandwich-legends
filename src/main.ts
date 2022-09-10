@@ -4,6 +4,7 @@ import { buildCreateOverworldEvent } from "./event";
 import { DirectionInput, buildKeyPressListener } from "./controls";
 import { asGridCoords } from "./utils";
 import { createTextMessage } from "./text-message";
+import { GameEvent } from "./types";
 
 const createOverworldEvent = buildCreateOverworldEvent({
   element: document.querySelector(".game-container") as Element,
@@ -42,13 +43,6 @@ const overworldMaps = {
                 type: "textMessage",
                 who: "npc1",
                 direction: "up",
-                text: "Hello there!",
-                faceHero: "npc1",
-              },
-              {
-                type: "textMessage",
-                who: "npc1",
-                direction: "up",
                 text: "I'm working here...",
               },
               { type: "walk", who: "hero", direction: "up" },
@@ -57,17 +51,18 @@ const overworldMaps = {
         ],
       }),
       npc2: new Person({
-        x: 3,
-        y: 7,
+        x: 8,
+        y: 5,
         src: "/images/characters/people/npc2.png",
         createEvent: createOverworldEvent,
-        behaviourLoop: [
-          { type: "walk", direction: "left" },
-          { type: "stand", direction: "up", time: 800 },
-          { type: "walk", direction: "up" },
-          { type: "walk", direction: "right" },
-          { type: "walk", direction: "down" },
-        ],
+        // behaviourLoop: [
+        //   { type: "walk", direction: "left" },
+        //   { type: "walk", direction: "left" },
+        //   { type: "stand", direction: "down", time: 2000 },
+        //   { type: "walk", direction: "right" },
+        //   { type: "walk", direction: "right" },
+        //   { type: "stand", direction: "down", time: 800 },
+        // ],
       }),
     },
     walls: {
@@ -75,6 +70,26 @@ const overworldMaps = {
       [asGridCoords(8, 6)]: true,
       [asGridCoords(7, 7)]: true,
       [asGridCoords(8, 7)]: true,
+    },
+    cutsceneSpaces: {
+      [asGridCoords(7, 4)]: [
+        {
+          events: [
+            { who: "npc2", type: "walk", direction: "left" },
+            { who: "npc2", type: "stand", direction: "up", time: 500 },
+            {
+              who: "npc2",
+              type: "textMessage",
+              direction: "up",
+              text: "You can't be in there!",
+            },
+            { who: "npc2", type: "walk", direction: "right" },
+            { who: "npc2", type: "stand", direction: "down" },
+            { who: "hero", type: "walk", direction: "down" },
+            { who: "hero", type: "walk", direction: "left" },
+          ] as GameEvent[],
+        },
+      ],
     },
   },
   Kitchen: {
