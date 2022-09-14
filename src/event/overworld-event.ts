@@ -1,4 +1,10 @@
-import { WorldMap, GameEvent, Behaviour, KeyPressListener } from "../types";
+import {
+  WorldMap,
+  GameEvent,
+  Behaviour,
+  KeyPressListener,
+  StartMap,
+} from "../types";
 import { EVENT_NAMES, oppositeDirection } from "../utils";
 
 type Resolve = () => void;
@@ -17,6 +23,7 @@ export interface Dependencies {
     init: (container: Element) => void;
   };
   buildKeyPressListener: buildKeyPressListener;
+  getStartMap: () => StartMap | null;
 }
 
 export interface EventConfig {
@@ -30,14 +37,22 @@ export class OverworldEvent {
   private buildKeyPressListener;
   private map;
   private event;
+  private getStartMap;
 
   constructor(
-    { element, createTextMessage, buildKeyPressListener }: Dependencies,
+    {
+      element,
+      createTextMessage,
+      buildKeyPressListener,
+      getStartMap,
+    }: Dependencies,
     { map, event }: EventConfig
   ) {
     this.element = element;
     this.createTextMessage = createTextMessage;
     this.buildKeyPressListener = buildKeyPressListener;
+    this.getStartMap = getStartMap;
+
     this.map = map;
     this.event = event;
   }
@@ -100,6 +115,14 @@ export class OverworldEvent {
       buildKeyPressListener: this.buildKeyPressListener,
     });
     message.init(this.element);
+  }
+
+  changeMap(resolve: Resolve) {
+    const startMap = this.getStartMap();
+    if (startMap && this.event.map) {
+      startMap(this.event.map);
+      resolve();
+    }
   }
 
   init(): Promise<Behaviour> {

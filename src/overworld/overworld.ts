@@ -1,4 +1,4 @@
-import { KeyPressListener } from "../types";
+import { KeyPressListener, StartMap } from "../types";
 import { addEventListener } from "../utils";
 import { OverworldMap } from "./map";
 import { Maps } from "./types";
@@ -79,15 +79,20 @@ export class Overworld {
     });
   }
 
-  init() {
-    this.map = new OverworldMap(this.overworldMaps["DemoRoom"]);
+  startMap: StartMap = (mapKey: string) => {
+    const mapConfig = this.overworldMaps[mapKey];
+    this.map = new OverworldMap(mapConfig);
     this.map.mountObjects();
+  };
+
+  init() {
+    this.startMap("DemoRoom");
     this.startGameLoop();
 
     this.bindActionInput();
     this.bindHeroPositionCheck();
 
-    this.map.startCutscene([
+    this.map?.startCutscene([
       { who: "hero", type: "walk", direction: "down" },
       { who: "hero", type: "walk", direction: "down" },
       { who: "npc1", type: "walk", direction: "left" },

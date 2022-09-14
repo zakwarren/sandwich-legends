@@ -18,6 +18,7 @@ export interface GameEvent {
   who: string;
   text?: string;
   faceHero?: string;
+  map?: string;
 }
 
 export interface EventHandler {

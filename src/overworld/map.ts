@@ -9,7 +9,7 @@ export class OverworldMap {
   private walls;
   public isCutscenePlaying = false;
   private createEvent;
-  private cutsceneSpaces;
+  private cutsceneSpaces: { [key: string]: { events: GameEvent[] }[] };
 
   constructor(config: MapConfig) {
     this.gameObjects = config.gameObjects;

@@ -34,6 +34,7 @@ describe("OverworldEvent", () => {
     (_keyCode: string, _callback: () => void): KeyPressListener => ({
       unbind: jest.fn(),
     });
+  const getStartMap = () => jest.fn();
 
   it("should listen for a stand event", () => {
     const map = createMap();
@@ -47,6 +48,7 @@ describe("OverworldEvent", () => {
         element: createElement(),
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
+        getStartMap,
       },
       { map, event }
     );
@@ -69,6 +71,7 @@ describe("OverworldEvent", () => {
         element: createElement(),
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
+        getStartMap,
       },
       { map, event }
     );
@@ -92,6 +95,7 @@ describe("OverworldEvent", () => {
         element: createElement(),
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
+        getStartMap,
       },
       { map, event }
     );

@@ -1,5 +1,11 @@
 import { CameraPosition } from "./camera";
-import { Context, Behaviour, Direction, GameEvent } from "./behaviour";
+import {
+  Context,
+  Behaviour,
+  Direction,
+  GameEvent,
+  EventHandler,
+} from "./behaviour";
 
 interface BehaviourConfig {
   type: Behaviour;
@@ -31,3 +37,18 @@ export interface WorldMap {
   addWall: (x: number, y: number) => void;
   moveWall: (x: number, y: number, direction: Direction) => void;
 }
+
+export interface MapConfig {
+  lowerSrc: string;
+  upperSrc: string;
+  gameObjects: { [key: string]: GameObject };
+  walls?: { [key: string]: boolean };
+  createEvent: (config: { map: WorldMap; event: GameEvent }) => EventHandler;
+  cutsceneSpaces?: { [key: string]: { events: GameEvent[] }[] };
+}
+
+export interface Maps {
+  [key: string]: MapConfig;
+}
+
+export type StartMap = (mapKey: string) => void;
