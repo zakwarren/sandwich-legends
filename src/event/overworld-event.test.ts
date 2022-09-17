@@ -1,6 +1,11 @@
 /** @jest-environment jsdom */
 import { OverworldEvent } from "./overworld-event";
-import { GameEvent, WorldMap, KeyPressListener } from "../types";
+import {
+  GameEvent,
+  WorldMap,
+  KeyPressListener,
+  SceneTransition,
+} from "../types";
 import { emitEvent } from "../utils";
 
 describe("OverworldEvent", () => {
@@ -35,6 +40,10 @@ describe("OverworldEvent", () => {
       unbind: jest.fn(),
     });
   const getStartMap = () => jest.fn();
+  const createSceneTransition = (): SceneTransition => ({
+    init: jest.fn(),
+    fadeOut: jest.fn(),
+  });
 
   it("should listen for a stand event", () => {
     const map = createMap();
@@ -49,6 +58,7 @@ describe("OverworldEvent", () => {
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
         getStartMap,
+        createSceneTransition,
       },
       { map, event }
     );
@@ -72,6 +82,7 @@ describe("OverworldEvent", () => {
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
         getStartMap,
+        createSceneTransition,
       },
       { map, event }
     );
@@ -96,6 +107,7 @@ describe("OverworldEvent", () => {
         createTextMessage: buildCreateTextMessage(),
         buildKeyPressListener: buildBuildKeyPressListener(),
         getStartMap,
+        createSceneTransition,
       },
       { map, event }
     );

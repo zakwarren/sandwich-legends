@@ -1,4 +1,4 @@
-import { Overworld } from "./overworld";
+import { Overworld, createSceneTransition } from "./overworld";
 import { buildCreateOverworldEvent } from "./event";
 import { DirectionInput, buildKeyPressListener } from "./controls";
 import { createTextMessage } from "./text-message";
@@ -13,6 +13,7 @@ const createOverworldEvent = buildCreateOverworldEvent({
   createTextMessage,
   buildKeyPressListener,
   getStartMap,
+  createSceneTransition,
 });
 const directionInput = new DirectionInput();
 const overworldMaps = buildOverworldMaps(directionInput, createOverworldEvent);

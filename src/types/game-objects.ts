@@ -52,3 +52,8 @@ export interface Maps {
 }
 
 export type StartMap = (mapKey: string) => void;
+
+export type SceneTransition = {
+  init: (container: Element, callback: () => void) => void;
+  fadeOut: () => void;
+};

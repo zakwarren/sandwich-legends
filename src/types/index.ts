@@ -14,4 +14,5 @@ export type {
   Maps,
   MapConfig,
   StartMap,
+  SceneTransition,
 } from "./game-objects";

@@ -4,6 +4,7 @@ import {
   Behaviour,
   KeyPressListener,
   StartMap,
+  SceneTransition,
 } from "../types";
 import { EVENT_NAMES, oppositeDirection } from "../utils";
 
@@ -24,6 +25,7 @@ export interface Dependencies {
   };
   buildKeyPressListener: buildKeyPressListener;
   getStartMap: () => StartMap | null;
+  createSceneTransition: () => SceneTransition;
 }
 
 export interface EventConfig {
@@ -38,6 +40,7 @@ export class OverworldEvent {
   private map;
   private event;
   private getStartMap;
+  private createSceneTransition;
 
   constructor(
     {
@@ -45,6 +48,7 @@ export class OverworldEvent {
       createTextMessage,
       buildKeyPressListener,
       getStartMap,
+      createSceneTransition: createSceneTranstion,
     }: Dependencies,
     { map, event }: EventConfig
   ) {
@@ -52,6 +56,7 @@ export class OverworldEvent {
     this.createTextMessage = createTextMessage;
     this.buildKeyPressListener = buildKeyPressListener;
     this.getStartMap = getStartMap;
+    this.createSceneTransition = createSceneTranstion;
 
     this.map = map;
     this.event = event;
@@ -119,10 +124,15 @@ export class OverworldEvent {
 
   changeMap(resolve: Resolve) {
     const startMap = this.getStartMap();
-    if (startMap && this.event.map) {
-      startMap(this.event.map);
-      resolve();
-    }
+    const sceneTransition = this.createSceneTransition();
+    sceneTransition.init(this.element, () => {
+      if (startMap && this.event.map) {
+        startMap(this.event.map);
+        resolve();
+
+        sceneTransition.fadeOut();
+      }
+    });
   }
 
   init(): Promise<Behaviour> {
