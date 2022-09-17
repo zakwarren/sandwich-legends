@@ -9,7 +9,7 @@ export interface BaseAnimations {
 
 export type Direction = "up" | "down" | "left" | "right";
 
-export type Behaviour = "stand" | "walk" | "textMessage";
+export type Behaviour = "stand" | "walk" | "textMessage" | "changeMap";
 
 export interface GameEvent {
   type: Behaviour;

@@ -9,7 +9,7 @@ export class OverworldMap {
   private walls;
   public isCutscenePlaying = false;
   private createEvent;
-  private cutsceneSpaces: { [key: string]: { events: GameEvent[] }[] };
+  private cutsceneSpaces: MapConfig["cutsceneSpaces"];
 
   constructor(config: MapConfig) {
     this.gameObjects = config.gameObjects;
@@ -82,7 +82,9 @@ export class OverworldMap {
 
   checkForFootstepCutscene() {
     const hero = this.gameObjects["hero"];
-    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
+    const match = this.cutsceneSpaces
+      ? this.cutsceneSpaces[`${hero.x},${hero.y}`]
+      : undefined;
     if (!this.isCutscenePlaying && match) {
       this.startCutscene(match[0].events);
     }
