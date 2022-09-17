@@ -1,4 +1,5 @@
 import { KeyPressListener } from "../types";
+import { RevealingText } from "./revealing-text";
 
 export interface Config {
   text: string;
@@ -17,6 +18,7 @@ export class TextMessage {
   private buildKeyPressListener;
   private element: Element | null = null;
   private actionListener?: KeyPressListener;
+  private revealingText: RevealingText | null = null;
 
   constructor({ text, onComplete, buildKeyPressListener }: Config) {
     this.text = text;
@@ -30,8 +32,8 @@ export class TextMessage {
 
     const p = document.createElement("p");
     p.classList.add(`${cssClass}_p`);
-    p.innerText = this.text;
     this.element.appendChild(p);
+    // text will be added to p with the typewriter effect
 
     const button = document.createElement("button");
     button.classList.add(`${cssClass}_button`);
@@ -40,18 +42,28 @@ export class TextMessage {
     this.element.appendChild(button);
 
     this.actionListener = this.buildKeyPressListener("Enter", () => {
-      this.actionListener?.unbind();
       this.done();
     });
+
+    return p;
   }
 
   private done = () => {
-    this.element?.remove();
-    this.onComplete();
+    if (this.revealingText?.isDone) {
+      this.element?.remove();
+      this.actionListener?.unbind();
+      this.onComplete();
+    } else {
+      this.revealingText?.warpToDone();
+    }
   };
 
   init(container: Element) {
-    this.createElement();
+    const element = this.createElement();
     container.appendChild(this.element as Element);
+
+    // initialize the typewriter effect
+    this.revealingText = new RevealingText({ text: this.text, element });
+    this.revealingText.init();
   }
 }
